@@ -26,8 +26,22 @@ export async function POST(request: NextRequest) {
     },
   };
 
+  const androidPayload: Message = {
+    token: "Copy Token Từ Log Trong App Qua Đây",
+    notification: {
+      title: title,
+      body: message,
+    },
+    android: {
+      notification: {
+        clickAction: "FLUTTER_NOTIFICATION_CLICK",
+      },
+    },
+  };
+
   try {
     await admin.messaging().send(payload);
+    await admin.messaging().send(androidPayload);
 
     return NextResponse.json({ success: true, message: "Notification sent!" });
   } catch (error) {
